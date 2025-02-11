@@ -32,7 +32,7 @@
                             </form>
 
                             <!-- Botón de verificación -->
-                            <form action="{{ route('admin.users.toggleVerification', $user->id) }}" method="POST" class="d-inline-block">
+                            <form action="{{ route('admin.users.cambiarVerificar', $user->id) }}" method="POST" class="d-inline-block">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="btn btn-sm {{ $user->hasVerifiedEmail() ? 'btn-outline-secondary' : 'btn-outline-primary' }}">

@@ -3,11 +3,31 @@
 @section('content')
 <div class="container mt-5">
     <div class="row">
-        <!-- Imagen principal -->
+        <!-- Carrusel de imágenes -->
         <div class="col-md-6">
-            <img src="data:image/jpeg;base64,{{ base64_encode($sale->img) }}" 
-                 alt="{{ $sale->product }}" 
-                 class="img-fluid rounded shadow-sm">
+            @if ($sale->images->count() > 0)
+            <div id="saleImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($sale->images as $index => $image)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img src="{{ asset('storage/' . $image->ruta) }}" 
+                             alt="Imagen del producto" 
+                             class="d-block w-100 rounded shadow" 
+                             style="height: 400px; object-fit: fill;">
+                    </div>
+                    @endforeach
+                </div>
+                <!-- Controles del carrusel -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#saleImagesCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#saleImagesCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+            @endif
         </div>
 
         <!-- Detalles del anuncio -->
@@ -22,19 +42,5 @@
             <a href="{{ url()->previous() }}" class="btn btn-outline-secondary mt-3">Volver a la lista</a>
         </div>
     </div>
-
-    <!-- Galería de imágenes adicionales -->
-    @if ($sale->images->count() > 0)
-        <h3 class="mt-5">Imágenes adicionales</h3>
-        <div class="row g-3 mt-3">
-            @foreach ($sale->images as $image)
-                <div class="col-md-3">
-                    <img src="{{ asset('storage/' . $image->ruta) }}" 
-                         alt="Imagen adicional" 
-                         class="img-fluid rounded shadow-sm">
-                </div>
-            @endforeach
-        </div>
-    @endif
 </div>
 @endsection

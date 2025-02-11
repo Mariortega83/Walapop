@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         User::findOrFail($id)->delete();
-        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('admin.users');
     }
 
     public function utilities()
@@ -44,7 +44,7 @@ class AdminController extends Controller
     public function deleteSale($id)
     {
         Sale::findOrFail($id)->delete();
-        return redirect()->route('admin.utilities')->with('success', 'Anuncio eliminado correctamente.');
+        return redirect()->route('admin.utilities');
     }
 
     public function storeCategory(Request $request)
@@ -54,7 +54,7 @@ class AdminController extends Controller
         return redirect()->route('admin.utilities')->with('success', 'Categoría añadida correctamente.');
     }
 
-    public function toggleVerification($id)
+    public function cambiarVerificar($id)
 {
     $user = User::findOrFail($id);
     

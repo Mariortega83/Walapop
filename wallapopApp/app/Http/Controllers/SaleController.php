@@ -12,11 +12,27 @@ use Illuminate\Support\Facades\Storage;
 
 class SaleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::with(['category', 'images'])->where('isSold', false)->get();
-        return view('sales.index', compact('sales'));
+        // Obtener la categoría seleccionada
+        $categoryId = $request->input('category_id');
+    
+        // Obtener todas las categorías para el filtro
+        $categories = Category::all();
+    
+        // Obtener los anuncios que no estén vendidos y aplicar el filtro por categoría
+        $query = Sale::with('category', 'images', 'user')->where('isSold', false);
+    
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+    
+        $sales = $query->get();
+    
+        return view('sales.index', compact('sales', 'categories'));
     }
+    
+
 
     public function create()
     {
@@ -84,7 +100,7 @@ class SaleController extends Controller
         return view('sales.show', compact('sale'));
     }
 
-    public function toggleSold($id)
+    public function cambiarVerificar($id)
     {
         $sale = Sale::findOrFail($id);
 
@@ -98,24 +114,6 @@ class SaleController extends Controller
         );
     }
 
-    // public function toggleActivate($id)
-    // {
-    //     $sale = Sale::findOrFail($id);
-
-    // // Verificar que el usuario autenticado sea el dueño del anuncio
-    // if ($sale->user_id !== Auth::id()) {
-    //     abort(403, 'No tienes permiso para realizar esta acción.');
-    // }
-
-    // // Alternar el estado de isSold
-    // $sale->isSold = !$sale->isSold; // Cambia true a false o viceversa
-    // $sale->save();
-
-    // return redirect()->route('user.profile')->with(
-    //     'status',
-    //     'El estado del anuncio ha sido actualizado a ' . ($sale->isSold ? 'vendido' : 'no vendido') . '.'
-    // );
-    // }
 
     public function destroy($id)
     {

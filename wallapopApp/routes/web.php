@@ -20,8 +20,7 @@ Route::middleware('auth', 'verified')->get('/profile', [UserController::class, '
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
     Route::post('/sales', [SaleController::class, 'store'])->name('sales.store');
-    Route::patch('/sales/{id}/toggle-sold', [SaleController::class, 'toggleSold'])->name('sales.toggleSold');
-    Route::patch('/sales/{id}/toggle-activate', [SaleController::class, 'toggleActivate'])->name('sales.toggleActivate');
+    Route::patch('/sales/{id}/cambiar-verificar', [SaleController::class, 'cambiarVerificar'])->name('sales.cambiarVerificar');
     Route::delete('sales/{sale}', [SaleController::class, 'destroy'])->name('sales.delete');
 });
 
@@ -36,7 +35,7 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     Route::get('/utilities', [AdminController::class, 'utilities'])->name('admin.utilities');
     Route::delete('/sales/{id}', [AdminController::class, 'deleteSale'])->name('admin.sales.delete');
     Route::post('/categories', [AdminController::class, 'storeCategory'])->name('admin.categories.store');
-    Route::patch('/users/{id}/toggle-verification', [AdminController::class, 'toggleVerification'])->name('admin.users.toggleVerification');
+    Route::patch('/users/{id}/cambiar-verificar', [AdminController::class, 'cambiarVerificar'])->name('admin.users.cambiarVerificar');
 });
 
 // Eliminar categoría

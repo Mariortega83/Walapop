@@ -37,7 +37,7 @@
                 </td>
                 <td>
 
-                    <form action="{{ route('sales.toggleSold', $sale->id) }}" method="POST">
+                    <form action="{{ route('sales.cambiarVerificar', $sale->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-sm {{ $sale->isSold ? 'btn-danger' : 'btn-success' }}">

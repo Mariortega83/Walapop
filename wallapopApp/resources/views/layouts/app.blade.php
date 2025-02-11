@@ -19,7 +19,7 @@
         }
 
         .navbar {
-            background-color: #4e73df;
+            background-color: #28a745; /* Verde */
         }
 
         .navbar-brand, .nav-link {
@@ -27,7 +27,7 @@
         }
 
         .navbar-nav .nav-link:hover {
-            color: #ff6347;
+            color: #218838; /* Verde más oscuro */
         }
 
         .card {
@@ -36,17 +36,18 @@
         }
 
         .card-header {
-            background-color: #4e73df;
+            background-color: #28a745; /* Verde */
             color: white;
         }
 
-        .btn-primary {
-            background-color: #ff6347;
-            border-color: #ff6347;
+
+        .btn-primary:hover {
+            background-color: #218838; /* Verde más oscuro */
+            border-color: #218838;
         }
 
         .footer {
-            background-color: #4e73df;
+            background-color: #28a745; /* Verde */
             color: white;
             padding: 10px 0;
             text-align: center;
@@ -59,7 +60,7 @@
         }
 
         .footer a:hover {
-            color: #ff6347;
+            color: #218838; /* Verde más oscuro */
         }
     </style>
 </head>

@@ -4,6 +4,23 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Anuncios</h1>
 
+    <!-- Filtro por categoría -->
+    <form action="{{ route('sales.index') }}" method="GET" class="mb-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <select name="category_id" class="form-select" onchange="this.form.submit()">
+                    <option value="">Todas las categorías</option>
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <!-- Mensaje si no hay anuncios -->
     @if($sales->isEmpty())
     <p class="text-center text-muted">No hay anuncios disponibles.</p>
     @else
@@ -18,9 +35,9 @@
                         <div class="carousel-inner">
                             @foreach ($sale->images as $key => $image)
                             <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <!-- <img src="{{ asset('storage/' . $image->img) }}" alt="{{ $sale->product }}" class="d-block w-100" style="height: 200px; object-fit: cover;"> -->
-                                <img src="{{ asset('storage/' . $image->ruta) }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Imagen de {{ $sale->product }}">
-
+                                <img src="{{ asset('storage/' . $image->ruta) }}" class="d-block w-100" 
+                                     style="height: 400px; object-fit: cover;" 
+                                     alt="Imagen de {{ $sale->product }}">
                             </div>
                             @endforeach
                         </div>
@@ -34,10 +51,11 @@
                         </button>
                     </div>
                     @else
-                    <img src="{{ asset('images/default-thumbnail.jpg') }}" class="w-100" style="height: 200px; object-fit: cover;" alt="Sin imagen">
+                    <img src="{{ asset('images/default-thumbnail.jpg') }}" class="w-100" 
+                         style="height: 200px; object-fit: fill;" 
+                         alt="Sin imagen">
                     @endif
                 </div>
-
 
                 <!-- Información del anuncio -->
                 <div class="card-body d-flex flex-column">
@@ -51,7 +69,7 @@
                 <!-- Botón (opcional) -->
                 <div class="card-footer bg-transparent border-0 text-center">
                     <a href="{{ route('sales.show', $sale->id) }}" class="btn btn-sm btn-outline-primary">Ver más</a>
-                    <form action="{{ route('sales.toggleSold', $sale->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('sales.cambiarVerificar', $sale->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-success" onclick="return confirm('¿Estás seguro de que quieres comprar este producto?')">
